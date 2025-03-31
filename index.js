@@ -12,7 +12,7 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 // Антиспам-фильтр
 // const BAD_WORDS = ["реклама", "подпишись", "скидка", "акция", "казино", "каз1но", "к@зино", "ka3ino", "kазино", "k@zino"];
 const BAD_WORDS = fs.readFileSync("bad_words.txt", "utf-8").split("\n").map(word => word.trim());
-const EXEMPT_USERS = [525697558, 1931616, 2830900]; // ID администраторов
+const EXEMPT_USERS = [525697558, 1931616, 2830900, 123456789]; // ID администраторов
 const ALLOWED_USERS = ["denkangin", "medic_yt"];
 
 bot.on("text", async (ctx) => {
@@ -35,7 +35,6 @@ bot.on("text", async (ctx) => {
     if (EXEMPT_USERS.includes(userId)) { // from file add .toString
         return;
     }
-
 
 
     if (BAD_WORDS.some((word) => messageText.includes(word))) {
