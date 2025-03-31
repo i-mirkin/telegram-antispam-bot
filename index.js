@@ -1,6 +1,6 @@
 require("dotenv").config();
 const express = require("express");
-const { Telegraf } = require("telegraf");
+const {Telegraf} = require("telegraf");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -10,26 +10,53 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 
 // Антиспам-фильтр
 const BAD_WORDS = ["реклама", "подпишись", "скидка", "акция", "казино", "каз1но", "к@зино", "ka3ino", "kазино", "k@zino"];
-const EXEMPT_USERS = [123456789]; // ID администраторов
+// const EXEMPT_USERS = [525697558]; // ID администраторов
+const EXEMPT_USERS = []; // ID администраторов
+const ALLOWED_USERS = ['denkangin', 'medic_yt'];
 
 bot.on("text", async (ctx) => {
-    const messageText = ctx.message.text.toLowerCase();
-    const userId = ctx.message.from.id;
-    const chatId = ctx.chat.id;
 
-    if (BAD_WORDS.some((word) => messageText.includes(word))) {
-        try {
-            await ctx.deleteMessage();
-            // await ctx.reply(`Сообщение от @${ctx.message.from.username} удалено за рекламу.`);
+    try {
 
-            // if (!EXEMPT_USERS.includes(userId)) {
-            //     await ctx.telegram.banChatMember(chatId, userId);
-            //     await ctx.reply(`Пользователь @${ctx.message.from.username} заблокирован.`);
-            // }
-        } catch (error) {
-            console.error("Ошибка при удалении сообщения или бане:", error);
+        const messageText = ctx.message.text.toLowerCase();
+        const userId = ctx.message.from.id;
+        const chatId = ctx.chat.id;
+        const username = ctx.message.from.username ? ctx.message.from.username.toLowerCase() : "";
+
+        // Если пользователь админ, он может писать что угодно
+        // const chatAdmins = await ctx.getChatAdministrators();
+        // const adminIds = chatAdmins.map(admin => admin.user.id.toString());
+        // if (adminIds.includes(userId.toString()) || EXEMPT_USERS.includes(userId.toString())) {
+        //     return;
+        // }
+
+        if (ALLOWED_USERS.includes(username)) {
+            return;
         }
+
+        if (EXEMPT_USERS.includes(userId.toString())) {
+            return;
+        }
+
+        if (BAD_WORDS.some((word) => messageText.includes(word))) {
+            try {
+                await ctx.deleteMessage();
+                // await ctx.reply(`Сообщение от @${ctx.message.from.username} удалено за рекламу.`);
+
+                // if (!EXEMPT_USERS.includes(userId)) {
+                //     await ctx.telegram.banChatMember(chatId, userId);
+                //     await ctx.reply(`Пользователь @${ctx.message.from.username} заблокирован.`);
+                // }
+            } catch (error) {
+                console.error("Ошибка при удалении сообщения или бане:", error);
+            }
+        }
+
+    } catch (error) {
+        console.error("Ошибка:", error);
     }
+
+
 });
 
 // Запуск бота
