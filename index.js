@@ -19,6 +19,7 @@ bot.on("text", async (ctx) => {
     const messageText = ctx.message.text.toLowerCase();
     const userId = ctx.message.from.id;
     const chatId = ctx.chat.id;
+    const username = ctx.message.from.username ? ctx.message.from.username.toLowerCase() : "";
 
     // Если пользователь админ, он может писать что угодно
     // const chatAdmins = await ctx.getChatAdministrators();
@@ -31,7 +32,7 @@ bot.on("text", async (ctx) => {
         return;
     }
 
-    if (EXEMPT_USERS.includes(userId.toString())) {
+    if (EXEMPT_USERS.includes(userId)) { // from file add .toString
         return;
     }
 
