@@ -11,13 +11,11 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 // Антиспам-фильтр
 const BAD_WORDS = ["реклама", "подпишись", "скидка", "акция", "казино", "каз1но", "к@зино", "ka3ino", "kазино", "k@zino"];
 // const EXEMPT_USERS = [525697558]; // ID администраторов
-const EXEMPT_USERS = []; // ID администраторов
-const ALLOWED_USERS = ['denkangin', 'medic_yt'];
+const EXEMPT_USERS = [123456789]; // ID администраторов
+const ALLOWED_USERS = ["denkangin", "medic_yt"];
 
 bot.on("text", async (ctx) => {
-
     try {
-
         const messageText = ctx.message.text.toLowerCase();
         const userId = ctx.message.from.id;
         const chatId = ctx.chat.id;
