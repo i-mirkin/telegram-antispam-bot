@@ -5,7 +5,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "echo \"Build command\"",
-    "prestart": "docker rm -f $(docker ps -aq) 2>/dev/null || true",
     "start": "node index.js"
   },
   "keywords": [],
