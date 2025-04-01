@@ -68,7 +68,9 @@ bot.on("text", async (ctx) => {
 
 // Запуск бота
 bot.launch();
-console.log("🚀 Бот запущен!");
+const now = new Date();
+console.log(`🚀 Бот запущен! Время: ${now.toISOString().replace("T", " ").split(".")[0]}`);
+
 
 // Создаем простой HTTP-сервер для Timeweb
 app.get("/", (req, res) => {
