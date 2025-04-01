@@ -4,7 +4,7 @@ const { Telegraf } = require("telegraf");
 const fs = require("fs");
 
 const app = express();
-const PORT = process.env.PORT || 3000; //  443 | 80
+const PORT = process.env.PORT || 80; //  443 | 80
 
 // Создаем бота
 const bot = new Telegraf(process.env.BOT_TOKEN);
