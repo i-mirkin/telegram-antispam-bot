@@ -17,17 +17,17 @@ const ALLOWED_USERS = ["denkangin", "medic_yt"];
 
 
 // 🚫 Проверка на запрещенные сообщения
-bot.on(["photo", "document"], async (ctx) => {
-    const userId = ctx.from.id.toString();
-    // Если пользователь в списке исключений — пропускаем
-    if (EXEMPT_USERS.includes(userId)) return;
-    try {
-        await ctx.deleteMessage();
-        // await ctx.reply(`@${ctx.from.username || "пользователь"}, отправка изображений запрещена! 🚫`);
-    } catch (err) {
-        console.error("Ошибка при удалении фото:", err);
-    }
-});
+// bot.on(["photo", "document"], async (ctx) => {
+//     const userId = ctx.from.id.toString();
+//     // Если пользователь в списке исключений — пропускаем
+//     if (EXEMPT_USERS.includes(userId)) return;
+//     try {
+//         await ctx.deleteMessage();
+//         // await ctx.reply(`@${ctx.from.username || "пользователь"}, отправка изображений запрещена! 🚫`);
+//     } catch (err) {
+//         console.error("Ошибка при удалении фото:", err);
+//     }
+// });
 
 bot.on("text", async (ctx) => {
     const messageText = ctx.message.text.toLowerCase();
