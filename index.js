@@ -17,7 +17,7 @@ const ALLOWED_USERS = ["denkangin", "medic_yt"];
 
 
 // 🚫 Проверка на запрещенные сообщения
-bot.on(["photo", "document"], async (ctx) => {
+bot.on(["photo"/*, "document"*/], async (ctx) => {
     const userId = ctx.from.id.toString();
     // Если пользователь в списке исключений — пропускаем
     if (EXEMPT_USERS.includes(userId)) return;
@@ -30,11 +30,11 @@ bot.on(["photo", "document"], async (ctx) => {
     }
 
     // Если это документ
-    if (ctx.message.document) {
-        // Удаляем сообщение с документом
-        await ctx.deleteMessage();
-        return;
-    }
+    // if (ctx.message.document) {
+    //     // Удаляем сообщение с документом
+    //     await ctx.deleteMessage();
+    //     return;
+    // }
 });
 
 bot.on("text", async (ctx) => {
