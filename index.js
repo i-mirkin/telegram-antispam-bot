@@ -17,26 +17,25 @@ const ALLOWED_USERS = ["denkangin", "medic_yt"];
 
 
 // 🚫 Проверка на запрещенные сообщения
-// bot.on(["photo", "document"], async (ctx) => {
-// bot.on("photo", async (ctx) => {
-//     const userId = ctx.from.id.toString();
-//     // Если пользователь в списке исключений — пропускаем
-//     if (EXEMPT_USERS.includes(userId)) return;
-//
-//     // Если это фотография
-//     if (ctx.message.photo) {
-//         // Удаляем сообщение с фотографией
-//         await ctx.deleteMessage();
-//         return;
-//     }
-//
-//     // Если это документ
-//     if (ctx.message.document) {
-//         // Удаляем сообщение с документом
-//         await ctx.deleteMessage();
-//         return;
-//     }
-// });
+bot.on(["photo", "document"], async (ctx) => {
+    const userId = ctx.from.id.toString();
+    // Если пользователь в списке исключений — пропускаем
+    if (EXEMPT_USERS.includes(userId)) return;
+
+    // Если это фотография
+    if (ctx.message.photo) {
+        // Удаляем сообщение с фотографией
+        await ctx.deleteMessage();
+        return;
+    }
+
+    // Если это документ
+    if (ctx.message.document) {
+        // Удаляем сообщение с документом
+        await ctx.deleteMessage();
+        return;
+    }
+});
 
 bot.on("text", async (ctx) => {
     const messageText = ctx.message.text.toLowerCase();
