@@ -4,7 +4,7 @@ const { Telegraf } = require("telegraf");
 const fs = require("fs");
 
 const app = express();
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 80; // or 443
 
 // Создаем бота
 const bot = new Telegraf(process.env.BOT_TOKEN);
@@ -14,6 +14,20 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 const BAD_WORDS = fs.readFileSync("bad_words.txt", "utf-8").split("\n").map(word => word.trim());
 const EXEMPT_USERS = [1931616, 2830900, 123456789]; // ID администраторов
 const ALLOWED_USERS = ["denkangin", "medic_yt"];
+
+
+// 🚫 Проверка на запрещенные сообщения
+bot.on(["photo", "document"], async (ctx) => {
+    const userId = ctx.from.id.toString();
+    // Если пользователь в списке исключений — пропускаем
+    if (EXEMPT_USERS.includes(userId)) return;
+    try {
+        await ctx.deleteMessage();
+        // await ctx.reply(`@${ctx.from.username || "пользователь"}, отправка изображений запрещена! 🚫`);
+    } catch (err) {
+        console.error("Ошибка при удалении фото:", err);
+    }
+});
 
 bot.on("text", async (ctx) => {
     const messageText = ctx.message.text.toLowerCase();
